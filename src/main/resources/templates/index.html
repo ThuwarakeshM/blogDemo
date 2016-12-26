@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::site-head"></head>
+<body>
+<header th:replace="layout::site-header"/>
+<aside>
+    <h2>Recent Posts</h2>
+    <a href="#" th:each="p:${last5Post}" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}">Work Begins</a>
+</aside>
+
+<main>
+    <article th:each="p:${last3Post}">
+        <h2 class="title" th:text="${p.title}">Post Title</h2>
+        <div class="date">
+            <i>Posted on</i>
+            <span th:text="${#dates.format(p.date, 'dd-MMM-yyyy')}">22-May-2016</span>
+            <span th:if="${p.auther}" th:remove="tag">
+                <i>by</i>
+                <span th:text="${p.auther.fullName != null?
+                p.auther.fullName:p.auther.username}">Thuwarakesh Murallie</span>
+            </span>
+        </div>
+        <p class="content" th:utext="${p.body}">Post Content</p>
+    </article>
+</main>
+<footer th:replace="layout::site-footer"/>
+</body>
+</html>
